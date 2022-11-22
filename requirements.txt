@@ -1,0 +1,10 @@
+pyquaternion
+beautifulsoup4
+Box2D>=2.3.2
+num2words
+six
+tensorboard_logger
+termcolor
+gym[mujoco]==0.7.4
+mujoco-py==0.5.7
+tensorflow # will use tensorflow 2 with compat from tensor1
