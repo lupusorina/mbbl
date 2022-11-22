@@ -14,7 +14,9 @@ import multiprocessing
 import time
 
 import numpy as np
-import tensorflow as tf
+# import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 from mbbl.config import init_path
 from mbbl.env import env_register
@@ -138,7 +140,7 @@ class base_worker(multiprocessing.Process):
 
     def _build_session(self):
         # TODO: the tensorflow configuration
-        config = tf.ConfigProto(device_count={'GPU': 0})  # only cpu version
+        config = tf.compat.v1.ConfigProto(device_count={'GPU': 0})  # only cpu version
         self._session = tf.Session(config=config)
 
     def _build_env(self):

@@ -7,7 +7,11 @@
 import multiprocessing
 
 import numpy as np
-import tensorflow as tf
+# import tensorflow as tf
+
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+
 
 from mbbl.config import init_path
 from mbbl.env import env_register
@@ -93,7 +97,7 @@ class base_trainer(multiprocessing.Process):
     def _build_session(self):
         # TODO: the tensorflow configuration
 
-        config = tf.ConfigProto(device_count={'GPU': 0})  # only cpu version
+        config = tf.compat.v1.ConfigProto(device_count={'GPU': 0})  # only cpu version
         if not self.args.gpu:
             self._session = tf.Session(config=config)
         else:
@@ -109,7 +113,7 @@ class base_trainer(multiprocessing.Process):
 
         if self.args.gpu != None:
             gpu_options = tf.GPUOptions(per_process_gpu_memory_fraction=0.25)
-            tf_config = tf.ConfigProto(
+            tf_config = tf.compat.v1.ConfigProto(
                     inter_op_parallelism_threads=1,
                     intra_op_parallelism_threads=1,
                     gpu_options=gpu_options)
@@ -120,7 +124,7 @@ class base_trainer(multiprocessing.Process):
             print('AVAILABLE GPUS:', get_available_gpus())
             return session
         # not using gpu
-        config = tf.ConfigProto(config=config)
+        config = tf.compat.v1.ConfigProto(config=config)
         if self.args.interactive:
             return tf.InteractiveSession(config=config)
         else:
